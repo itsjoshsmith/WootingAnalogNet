@@ -1,10 +1,10 @@
 # WootingAnalogNet
 
-WootingAnalogNet is a .NET Framework library for interfacing with Wooting analog input devices. It provides a managed wrapper around the Wooting Analog SDK, enabling easy access to analog key states and device management from C# applications.
+WootingAnalogNet is a .NET Framework library for interfacing with Wooting analog devices. It provides a managed wrapper around the Wooting Analog SDK, enabling easy access to analog key values from C# applications.
 
 ## Features
 
-- Initialize and manage Wooting analog devices
+- Initialise and query Wooting analog devices information
 - Read analog values for individual keys or all keys
 - Support for multiple keycode modes (HID, ScanCode1, VirtualKey) (Extension class usage required)
 - Wait for key events (down, up, fully down, fully up, press) (Extension class usage required)
@@ -24,8 +24,11 @@ WootingAnalogNet is a .NET Framework library for interfacing with Wooting analog
 1. Download the latest release DLL from the releases page
 2. Reference the `WootingAnalogNet` project
 3. Ensure the Wooting Analog SDK native DLL (wooting_analog_wrapper.dll) is in the bin directory of your project
+4. Ensure your project is built in x64
 
 ### Usage Example (without extension methods)
+`Please see the Wiki the full documentation and examples`
+
 ```csharp
 using WootingAnalogNet;
 
