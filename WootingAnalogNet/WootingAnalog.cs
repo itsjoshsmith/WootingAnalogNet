@@ -365,8 +365,8 @@ namespace WootingAnalogNet
   {
     /// <summary>Success</summary>
     Ok = 1,
-    /// <summary>Item hasn't been initialized</summary>
-    UnInitialized = -2000,
+    /// <summary>Item hasn't been initialised</summary>
+    UnInitialised = -2000,
     /// <summary>No Devices are connected</summary>
     NoDevices = -1999,
     /// <summary>Device has been disconnected</summary>
