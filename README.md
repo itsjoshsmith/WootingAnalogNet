@@ -61,7 +61,11 @@ if (Keyboard.GetConnectedDevicesInfo(out DeviceInfo, DeviceCount) != DeviceCount
 
 // Print the device information
 for (int i = 0; i < DeviceInfo.Length; i++)
-  Console.WriteLine($"Device Name: {DeviceInfo[i].DeviceName} | Manufacturer Name:{DeviceInfo[i].ManufacturerName} | Device ID: {DeviceInfo[i].DeviceID} | VID: {DeviceInfo[i].VendorID} | PID: {DeviceInfo[i].ProductID}");
+  Console.WriteLine($"Device Name: {DeviceInfo[i].DeviceName} " +
+    $"| Manufacturer Name:{DeviceInfo[i].ManufacturerName} " +
+    $"| Device ID: {DeviceInfo[i].DeviceID} " +
+    $"| VID: {DeviceInfo[i].VendorID} " +
+    $"| PID: {DeviceInfo[i].ProductID}");
 
 // Default setting is HID, quite important to know which mode you are in as the KeyCodes will
 // change
