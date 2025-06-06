@@ -15,7 +15,7 @@ WootingAnalogNet is a .NET Framework library for interfacing with Wooting analog
 
 ### Prerequisites
 
-- .NET Framework 4.8
+- .NET Framework
 - Compatible Wooting keyboard and drivers
 - Wooting Analog SDK DLLs (must be available to your application)
 
@@ -25,31 +25,75 @@ WootingAnalogNet is a .NET Framework library for interfacing with Wooting analog
 2. Reference the `WootingAnalogNet` project or compiled DLL in your solution.
 3. Ensure the Wooting Analog SDK native DLLs are accessible (e.g., in your output directory).
 
-### Usage Example
+### Usage Example (without extension methods)
 ```csharp
-using WootingAnalogNet; using WootingAnalogNet.GeneralExtensions;
-class Program 
-{ 
-  static void Main() 
-  { 
-    var wooting = new WootingAnalog(); 
-    if (wooting.Initialise(out int deviceCount)) 
-    { 
-      Console.WriteLine($"Found {deviceCount} Wooting device(s).");
-      // Read analog value for the 'A' key
-      float analogValue = wooting.ReadAnalog(KeyCode.A);
-      Console.WriteLine($"Analog value for 'A': {analogValue}");
-  
-      // Wait for 'A' key to be fully pressed
-      wooting.WaitKeyFullyDown(KeyCode.A);
-      Console.WriteLine("'A' key fully pressed!");
-    }
-    else
+using WootingAnalogNet;
+
+WootingAnalog Keyboard = new WootingAnalog();
+WootingAnalogResult LastResult = WootingAnalogResult.UnInitialized;
+
+// The initialise call returns the amount of devices found
+int DeviceCount = Keyboard.Initialise();
+
+// To check if the SDK is actually initialised use IsInitialised
+// Note: In the extensions class there is an initialise method that covers both these methods
+bool SDKInitialised = Keyboard.IsInitialised();
+
+if (!SDKInitialised)
+{
+  Console.WriteLine("Failed to initialise the SDK");
+  return;
+}
+
+if (DeviceCount < 1)
+{
+  Console.WriteLine("Failed to find any Wooting devices");
+  return;
+}
+
+// Get the devices information
+WootingAnalogDeviceInfo[] DeviceInfo;
+if (Keyboard.GetConnectedDevicesInfo(out DeviceInfo, DeviceCount) != DeviceCount)
+{
+  Console.WriteLine("Failed to get device info");
+  return;
+}
+
+// Print the device information
+for (int i = 0; i < DeviceInfo.Length; i++)
+  Console.WriteLine($"Device Name: {DeviceInfo[i].DeviceName} | Manufacturer Name:{DeviceInfo[i].ManufacturerName} | Device ID: {DeviceInfo[i].DeviceID} | VID: {DeviceInfo[i].VendorID} | PID: {DeviceInfo[i].ProductID}");
+
+// Default setting is HID, quite important to know which mode you are in as the KeyCodes will
+// change
+LastResult = Keyboard.SetKeyCodeMode(EKeyCodeMode.ScanCode1);
+if(LastResult != WootingAnalogResult.Ok)
+{
+  Console.WriteLine("Failed to set KeyCodeMode");
+  return;
+}
+
+// Read all the key values until the escape key is pressed
+ushort[] KeyCodesBuffer = new ushort[64];
+float[] AnalogReadingsBuffer = new float[64];
+int Count = 0;
+while (Keyboard.ReadAnalog(0x01) != 1)
+{
+  Count = Keyboard.ReadFullBuffer(KeyCodesBuffer, AnalogReadingsBuffer, 64);
+  if (Count >= 0)
+  {
+    for (int i = 0; i < Count; i++)
     {
-      Console.WriteLine("Failed to initialize Wooting Analog SDK.");
+      if (KeyCodesBuffer[i] != 0x01)
+      {
+        Console.WriteLine($"Key: 0x{KeyCodesBuffer[i]:X2} | Value: {AnalogReadingsBuffer[i]}");
+      }
     }
   }
 }
+
+// Shut down gracefully
+Keyboard.Uninitialise();
+Keyboard.Dispose();
 ```
 
 ## API Overview
