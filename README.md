@@ -16,14 +16,14 @@ WootingAnalogNet is a .NET Framework library for interfacing with Wooting analog
 ### Prerequisites
 
 - .NET Framework
-- Compatible Wooting keyboard and drivers
-- Wooting Analog SDK DLLs (must be available to your application)
+- Compatible Wooting keyboard
+- Wooting Analog SDK DLL (wooting_analog_wrapper.dll)
 
 ### Installation
 
-1. Clone or download this repository.
-2. Reference the `WootingAnalogNet` project or compiled DLL in your solution.
-3. Ensure the Wooting Analog SDK native DLLs are accessible (e.g., in your output directory).
+1. Download the latest release DLL from the releases page
+2. Reference the `WootingAnalogNet` project
+3. Ensure the Wooting Analog SDK native DLL (wooting_analog_wrapper.dll) is in the bin directory of your project
 
 ### Usage Example (without extension methods)
 ```csharp
