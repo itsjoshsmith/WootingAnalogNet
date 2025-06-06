@@ -6,10 +6,10 @@ WootingAnalogNet is a .NET Framework library for interfacing with Wooting analog
 
 - Initialize and manage Wooting analog devices
 - Read analog values for individual keys or all keys
-- Support for multiple keycode modes (HID, ScanCode1, VirtualKey)
-- Wait for key events (down, up, fully down, fully up, press)
-- Key state queries (is down, is up, is fully down, is fully up)
-- Keycode translation utilities
+- Support for multiple keycode modes (HID, ScanCode1, VirtualKey) (Extension class usage required)
+- Wait for key events (down, up, fully down, fully up, press) (Extension class usage required)
+- Key state queries (is down, is up, is fully down, is fully up) (Extension class usage required)
+- Keycode translation utilities (Extension class usage required)
 
 ## Getting Started
 
